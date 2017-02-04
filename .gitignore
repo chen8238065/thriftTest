@@ -21,3 +21,4 @@ out/
 *.bak/
 *.bak
 .gradle/
+logs/
