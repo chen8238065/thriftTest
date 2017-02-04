@@ -1,0 +1,23 @@
+*.class
+.idea/
+*.impl
+target/
+.project
+.classpath
+*.iml
+.settings/
+.svn/
+*.log
+.DS_Store
+# Package Files #
+*.jar
+build-bootstrap.jar
+*.war
+*.ear
+.metadata
+/src/
+build/
+out/
+*.bak/
+*.bak
+.gradle/
