@@ -22,7 +22,7 @@ public class HelloAsycClientDemo extends ClientInit{
     public void startClient(String userName) {
         TNonblockingTransport transport=null;
         try {
-            TAsyncClientManager create啊 = new TAsyncClientManager();
+            TAsyncClientManager clientManager = new TAsyncClientManager();
             transport = (TNonblockingTransport) getClientTTransport();
 
             TProtocolFactory tprotocol = getTProtocolFactory();
