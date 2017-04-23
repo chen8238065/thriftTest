@@ -15,7 +15,6 @@ build-bootstrap.jar
 *.war
 *.ear
 .metadata
-/src/
 build/
 out/
 *.bak/
