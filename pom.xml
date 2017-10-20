@@ -15,7 +15,7 @@
 
     <name>thrift-demo-console</name>
     <description>A maven project to study thrift.</description>
-
+    <url>http://blog.csdn.net/chen8238065/article/details/50846104</url>
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
@@ -23,6 +23,32 @@
         <compiler-plugin.version>2.3.2</compiler-plugin.version>
         <thrift.version>0.9.1</thrift.version>
     </properties>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/chen8238065/thriftTest/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis-CI</system>
+        <url>https://travis-ci.org/chen8238065/thriftTest</url>
+    </ciManagement>
+    <scm>
+        <connection>scm:git:https://github.com/chen8238065/thriftTest.git</connection>
+        <developerConnection>scm:git:https://github.com/chen8238065/thriftTest.git</developerConnection>
+        <url>https://github.com/chen8238065/thriftTest</url>
+        <tag>HEAD</tag>
+    </scm>
+    <developers>
+        <developer>
+            <id>chapa</id>
+            <name>chapa</name>
+            <email>cpp8238065@163.com</email>
+            <organization>58Anjuke</organization>
+            <organizationUrl>http://blog.csdn.net/chen8238065/article/details/50846104</organizationUrl>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
