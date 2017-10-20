@@ -89,7 +89,7 @@
                         <executions>
                             <execution>
                                 <id>compile-thrift</id>
-                                <phase>generate-sources</phase>
+                                <!--<phase>generate-sources</phase>-->
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="src/main/java/com/anjuke/demo/thrift/auto"/>
