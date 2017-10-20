@@ -8,7 +8,10 @@ import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
 import org.apache.thrift.protocol.TProtocolFactory;
+import org.apache.thrift.transport.THttpClient;
+import org.apache.thrift.transport.TNonblockingSocket;
 import org.apache.thrift.transport.TNonblockingTransport;
+import org.apache.thrift.transport.TTransportException;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CountDownLatch;
@@ -75,6 +78,30 @@ public class HelloAsycClientDemo extends ClientInit{
             latch.countDown();
         }
     }
+
+//    public void startHttpClient(String userName) throws TTransportException {
+//        THttpClient transport1 = new THttpClient("http://localhost:8000");
+//        transport1.setConnectTimeout(1000);
+//        TNonblockingTransport transport= new TNonblockingSocket(transport1);
+//        try {
+//            TAsyncClientManager clientManager = new TAsyncClientManager();
+//            TProtocolFactoryFactory tprotocol = getTProtocolFactory();
+//
+//            HelloWorldService.AsyncClient client = new HelloWorldService.AsyncClient(
+//                    tprotocol, clientManager, transport);
+//            transport.open();
+//
+//            String result = client.sayHello(userName);
+//            System.out.println("Thrift client result =: " + result);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (null != transport) {
+//                transport.close();
+//            }
+//        }
+//
+//    }
 
     /**
      * @param args

@@ -15,12 +15,7 @@ public abstract class Init {
     private static Properties  pro = new Properties();
     static{
         try {
-            String userDir = System.getProperty("user.dir");
-            String rootPath = userDir + "/src/main/resources/";
-            String proPath = rootPath+ "thrift.properties";
-            FileInputStream in = new FileInputStream(proPath);
-            pro.load(in);
-            in.close();
+            pro.load(Init.class.getResourceAsStream("/thrift.properties"));
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
@@ -33,29 +28,6 @@ public abstract class Init {
     public static final String transportClientStr =  pro.getProperty("client_transport").trim();
     public static final String serverStr =  pro.getProperty("server").trim();
 
-
-    public static TTransportFactory getTTransportFactory() throws Exception {
-        TTransportFactory fac=null;
-        switch (transportClientStr){
-            case "TFramedTransport"://
-            case "TNonblockingSocket":
-                fac=new TFramedTransport.Factory();
-                break;
-            case "TZlibTransport"://
-                fac=new TZlibTransport.Factory();
-                break;
-            case "TFastFramedTransport"://
-                fac=new TFastFramedTransport.Factory();
-                break;
-            case "TSimpleJSONProtocol"://
-//                fac=new TSimpleJSONProtocol.Factory();
-                break;
-            default:
-                throw new Exception("transport factory is wrong");
-
-        }
-        return fac;
-    }
 
     public static TProtocolFactory getTProtocolFactory() throws Exception {
         TProtocolFactory fac=null;
@@ -104,6 +76,26 @@ public abstract class Init {
         return protocol;
     }
 
+    public static TTransportFactory getTTransportFactory() throws Exception {
+        TTransportFactory fac=null;
+        switch (transportClientStr){
+            case "TFramedTransport"://
+            case "TNonblockingSocket":
+                fac=new TFramedTransport.Factory();
+                break;
+            case "TZlibTransport"://
+               // fac=new TZlibTransport.Factory();
+                break;
+            case "TFastFramedTransport"://
+                fac=new TFastFramedTransport.Factory();
+                break;
+            default:
+                throw new Exception("transport factory is wrong");
+
+        }
+        return fac;
+    }
+
     public static TServerTransport getServerTTransport(){
         TServerTransport transport = null;
         try {
@@ -113,12 +105,6 @@ public abstract class Init {
                     break;
                 case "TNonblockingServerSocket"://
                     transport=new TNonblockingServerSocket(SERVER_PORT);
-                    break;
-                case "TZlibTransport"://
-//                    transport=new TZlibTransport(new TServerSocket(SERVER_PORT));
-                    break;
-                case "TFramedTransport"://
-                    transport=null;
                     break;
                 default:
                     throw new Exception("TServerTransport is wrong");
@@ -145,8 +131,8 @@ public abstract class Init {
                     transport=new TFileTransport("",false);
                     break;
                 case "TZlibTransport"://
-                    transport=new TZlibTransport(new TSocket(SERVER_IP,
-                            SERVER_PORT, TIMEOUT));
+//                    transport=new TZlibTransport(new TSocket(SERVER_IP,
+//                            SERVER_PORT, TIMEOUT));
                     break;
                 case "TFramedTransport"://
                     transport=new TFramedTransport(new TSocket(SERVER_IP,
@@ -175,9 +161,6 @@ public abstract class Init {
                 tArgs.processor(tprocessor);
                 tArgs.protocolFactory(getTProtocolFactory());
                 server = new TSimpleServer(tArgs);
-                break;
-            case "TThreadedServer"://
-
                 break;
             case "TThreadPoolServer"://
                 TThreadPoolServer.Args ttpsArgs = new TThreadPoolServer.Args(

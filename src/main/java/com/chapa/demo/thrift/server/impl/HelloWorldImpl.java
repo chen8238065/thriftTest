@@ -14,6 +14,7 @@ public class HelloWorldImpl implements HelloWorldService.Iface{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println(username);
         return "Hi," + username;
     }
 }
