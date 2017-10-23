@@ -117,10 +117,10 @@
                         <executions>
                             <execution>
                                 <id>compile-thrift</id>
-                                <!--<phase>generate-sources</phase>-->
+                                <phase>generate-sources</phase>
                                 <configuration>
                                     <tasks>
-                                        <mkdir dir="src/main/java/com/anjuke/demo/thrift/auto"/>
+                                        <!--<mkdir dir="src/main/java/com/chapa/demo/thrift/auto"/>-->
                                         <path id="thrift.path">
                                             <fileset dir="${project.basedir}/src/main/resources">
                                                 <include name="**/*.thrift"/>
@@ -136,7 +136,6 @@
                                             <arg line="${thrift.files}"/>
                                         </exec>
                                     </tasks>
-                                    <sourceRoot>src/main/java/thrift/demo/thrift</sourceRoot>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>

@@ -6,16 +6,31 @@
  */
 package com.chapa.demo.thrift.auto;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.thrift.EncodingUtils;
-import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
-import org.apache.thrift.scheme.TupleScheme;
 
-import java.util.*;
+import org.apache.thrift.scheme.TupleScheme;
+import org.apache.thrift.protocol.TTupleProtocol;
+import org.apache.thrift.protocol.TProtocolException;
+import org.apache.thrift.EncodingUtils;
+import org.apache.thrift.TException;
+import org.apache.thrift.async.AsyncMethodCallback;
+import org.apache.thrift.server.AbstractNonblockingServer.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Collections;
+import java.util.BitSet;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields>, java.io.Serializable, Cloneable, Comparable<Contact> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Contact");
@@ -42,7 +57,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
   public String ipAddress; // required
   public Map<String,String> props; // required
   public double salary; // required
-  public Set<Book> books; // required
+  public Set<TypeTest> books; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -149,7 +164,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.BOOKS, new org.apache.thrift.meta_data.FieldMetaData("books", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.SetMetaData(org.apache.thrift.protocol.TType.SET, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Book.class))));
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TypeTest.class))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Contact.class, metaDataMap);
   }
@@ -165,7 +180,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
     String ipAddress,
     Map<String,String> props,
     double salary,
-    Set<Book> books)
+    Set<TypeTest> books)
   {
     this();
     this.id = id;
@@ -203,9 +218,9 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
     }
     this.salary = other.salary;
     if (other.isSetBooks()) {
-      Set<Book> __this__books = new HashSet<Book>(other.books.size());
-      for (Book other_element : other.books) {
-        __this__books.add(new Book(other_element));
+      Set<TypeTest> __this__books = new HashSet<TypeTest>(other.books.size());
+      for (TypeTest other_element : other.books) {
+        __this__books.add(new TypeTest(other_element));
       }
       this.books = __this__books;
     }
@@ -410,22 +425,22 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
     return (this.books == null) ? 0 : this.books.size();
   }
 
-  public java.util.Iterator<Book> getBooksIterator() {
+  public java.util.Iterator<TypeTest> getBooksIterator() {
     return (this.books == null) ? null : this.books.iterator();
   }
 
-  public void addToBooks(Book elem) {
+  public void addToBooks(TypeTest elem) {
     if (this.books == null) {
-      this.books = new HashSet<Book>();
+      this.books = new HashSet<TypeTest>();
     }
     this.books.add(elem);
   }
 
-  public Set<Book> getBooks() {
+  public Set<TypeTest> getBooks() {
     return this.books;
   }
 
-  public Contact setBooks(Set<Book> books) {
+  public Contact setBooks(Set<TypeTest> books) {
     this.books = books;
     return this;
   }
@@ -507,7 +522,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
       if (value == null) {
         unsetBooks();
       } else {
-        setBooks((Set<Book>)value);
+        setBooks((Set<TypeTest>)value);
       }
       break;
 
@@ -661,49 +676,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
 
   @Override
   public int hashCode() {
-    HashCodeBuilder builder = new HashCodeBuilder();
-
-    boolean present_id = true;
-    builder.append(present_id);
-    if (present_id)
-      builder.append(id);
-
-    boolean present_name = true && (isSetName());
-    builder.append(present_name);
-    if (present_name)
-      builder.append(name);
-
-    boolean present_birthday = true;
-    builder.append(present_birthday);
-    if (present_birthday)
-      builder.append(birthday);
-
-    boolean present_phoneNo = true && (isSetPhoneNo());
-    builder.append(present_phoneNo);
-    if (present_phoneNo)
-      builder.append(phoneNo);
-
-    boolean present_ipAddress = true && (isSetIpAddress());
-    builder.append(present_ipAddress);
-    if (present_ipAddress)
-      builder.append(ipAddress);
-
-    boolean present_props = true && (isSetProps());
-    builder.append(present_props);
-    if (present_props)
-      builder.append(props);
-
-    boolean present_salary = true;
-    builder.append(present_salary);
-    if (present_salary)
-      builder.append(salary);
-
-    boolean present_books = true && (isSetBooks());
-    builder.append(present_books);
-    if (present_books)
-      builder.append(books);
-
-    return builder.toHashCode();
+    return 0;
   }
 
   @Override
@@ -801,11 +774,11 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
     return _Fields.findByThriftId(fieldId);
   }
 
-  public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+  public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
     schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
   }
 
-  public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+  public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
   }
 
@@ -869,7 +842,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
     return sb.toString();
   }
 
-  public void validate() throws TException {
+  public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // check for sub-struct validity
   }
@@ -877,7 +850,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
   private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
     try {
       write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-    } catch (TException te) {
+    } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
     }
   }
@@ -887,7 +860,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
       // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
       __isset_bitfield = 0;
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-    } catch (TException te) {
+    } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
     }
   }
@@ -900,13 +873,13 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
 
   private static class ContactStandardScheme extends StandardScheme<Contact> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Contact struct) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, Contact struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
       {
         schemeField = iprot.readFieldBegin();
-        if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+        if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
           break;
         }
         switch (schemeField.id) {
@@ -914,7 +887,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.id = iprot.readI32();
               struct.setIdIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -922,7 +895,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.name = iprot.readString();
               struct.setNameIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -930,7 +903,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
             if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
               struct.birthday = iprot.readI64();
               struct.setBirthdayIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -938,7 +911,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.phoneNo = iprot.readString();
               struct.setPhoneNoIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -946,27 +919,27 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.ipAddress = iprot.readString();
               struct.setIpAddressIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
           case 6: // PROPS
             if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
               {
-                org.apache.thrift.protocol.TMap _map0 = iprot.readMapBegin();
-                struct.props = new HashMap<String,String>(2*_map0.size);
-                for (int _i1 = 0; _i1 < _map0.size; ++_i1)
+                org.apache.thrift.protocol.TMap _map26 = iprot.readMapBegin();
+                struct.props = new HashMap<String,String>(2*_map26.size);
+                for (int _i27 = 0; _i27 < _map26.size; ++_i27)
                 {
-                  String _key2;
-                  String _val3;
-                  _key2 = iprot.readString();
-                  _val3 = iprot.readString();
-                  struct.props.put(_key2, _val3);
+                  String _key28;
+                  String _val29;
+                  _key28 = iprot.readString();
+                  _val29 = iprot.readString();
+                  struct.props.put(_key28, _val29);
                 }
                 iprot.readMapEnd();
               }
               struct.setPropsIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -974,26 +947,26 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
             if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
               struct.salary = iprot.readDouble();
               struct.setSalaryIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
           case 8: // BOOKS
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
-                org.apache.thrift.protocol.TSet _set4 = iprot.readSetBegin();
-                struct.books = new HashSet<Book>(2*_set4.size);
-                for (int _i5 = 0; _i5 < _set4.size; ++_i5)
+                org.apache.thrift.protocol.TSet _set30 = iprot.readSetBegin();
+                struct.books = new HashSet<TypeTest>(2*_set30.size);
+                for (int _i31 = 0; _i31 < _set30.size; ++_i31)
                 {
-                  Book _elem6;
-                  _elem6 = new Book();
-                  _elem6.read(iprot);
-                  struct.books.add(_elem6);
+                  TypeTest _elem32;
+                  _elem32 = new TypeTest();
+                  _elem32.read(iprot);
+                  struct.books.add(_elem32);
                 }
                 iprot.readSetEnd();
               }
               struct.setBooksIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -1008,7 +981,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Contact struct) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, Contact struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -1037,10 +1010,10 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
         oprot.writeFieldBegin(PROPS_FIELD_DESC);
         {
           oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.props.size()));
-          for (Map.Entry<String, String> _iter7 : struct.props.entrySet())
+          for (Map.Entry<String, String> _iter33 : struct.props.entrySet())
           {
-            oprot.writeString(_iter7.getKey());
-            oprot.writeString(_iter7.getValue());
+            oprot.writeString(_iter33.getKey());
+            oprot.writeString(_iter33.getValue());
           }
           oprot.writeMapEnd();
         }
@@ -1053,9 +1026,9 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
         oprot.writeFieldBegin(BOOKS_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRUCT, struct.books.size()));
-          for (Book _iter8 : struct.books)
+          for (TypeTest _iter34 : struct.books)
           {
-            _iter8.write(oprot);
+            _iter34.write(oprot);
           }
           oprot.writeSetEnd();
         }
@@ -1076,7 +1049,7 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
   private static class ContactTupleScheme extends TupleScheme<Contact> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Contact struct) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, Contact struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetId()) {
@@ -1122,10 +1095,10 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
       if (struct.isSetProps()) {
         {
           oprot.writeI32(struct.props.size());
-          for (Map.Entry<String, String> _iter9 : struct.props.entrySet())
+          for (Map.Entry<String, String> _iter35 : struct.props.entrySet())
           {
-            oprot.writeString(_iter9.getKey());
-            oprot.writeString(_iter9.getValue());
+            oprot.writeString(_iter35.getKey());
+            oprot.writeString(_iter35.getValue());
           }
         }
       }
@@ -1135,16 +1108,16 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
       if (struct.isSetBooks()) {
         {
           oprot.writeI32(struct.books.size());
-          for (Book _iter10 : struct.books)
+          for (TypeTest _iter36 : struct.books)
           {
-            _iter10.write(oprot);
+            _iter36.write(oprot);
           }
         }
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Contact struct) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, Contact struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(8);
       if (incoming.get(0)) {
@@ -1169,15 +1142,15 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
       }
       if (incoming.get(5)) {
         {
-          org.apache.thrift.protocol.TMap _map11 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.props = new HashMap<String,String>(2*_map11.size);
-          for (int _i12 = 0; _i12 < _map11.size; ++_i12)
+          org.apache.thrift.protocol.TMap _map37 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.props = new HashMap<String,String>(2*_map37.size);
+          for (int _i38 = 0; _i38 < _map37.size; ++_i38)
           {
-            String _key13;
-            String _val14;
-            _key13 = iprot.readString();
-            _val14 = iprot.readString();
-            struct.props.put(_key13, _val14);
+            String _key39;
+            String _val40;
+            _key39 = iprot.readString();
+            _val40 = iprot.readString();
+            struct.props.put(_key39, _val40);
           }
         }
         struct.setPropsIsSet(true);
@@ -1188,14 +1161,14 @@ public class Contact implements org.apache.thrift.TBase<Contact, Contact._Fields
       }
       if (incoming.get(7)) {
         {
-          org.apache.thrift.protocol.TSet _set15 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.books = new HashSet<Book>(2*_set15.size);
-          for (int _i16 = 0; _i16 < _set15.size; ++_i16)
+          org.apache.thrift.protocol.TSet _set41 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.books = new HashSet<TypeTest>(2*_set41.size);
+          for (int _i42 = 0; _i42 < _set41.size; ++_i42)
           {
-            Book _elem17;
-            _elem17 = new Book();
-            _elem17.read(iprot);
-            struct.books.add(_elem17);
+            TypeTest _elem43;
+            _elem43 = new TypeTest();
+            _elem43.read(iprot);
+            struct.books.add(_elem43);
           }
         }
         struct.setBooksIsSet(true);

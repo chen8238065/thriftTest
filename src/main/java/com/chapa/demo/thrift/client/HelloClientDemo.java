@@ -1,11 +1,9 @@
 package com.chapa.demo.thrift.client;
 
 import com.chapa.demo.thrift.auto.HelloWorldService;
-import com.chapa.demo.thrift.client.common.ClientInit;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
 
 /**
  * Created by CHEN on 2016/3/7.

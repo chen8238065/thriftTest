@@ -6,31 +6,47 @@
  */
 package com.chapa.demo.thrift.auto;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.thrift.TException;
-import org.apache.thrift.async.AsyncMethodCallback;
-import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
+
 import org.apache.thrift.scheme.TupleScheme;
-import org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer;
+import org.apache.thrift.protocol.TTupleProtocol;
+import org.apache.thrift.protocol.TProtocolException;
+import org.apache.thrift.EncodingUtils;
+import org.apache.thrift.TException;
+import org.apache.thrift.async.AsyncMethodCallback;
+import org.apache.thrift.server.AbstractNonblockingServer.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Collections;
+import java.util.BitSet;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 public class EntityService {
 
   public interface Iface {
 
-    public List<Contact> getAll() throws TException;
+    public void setEntity(com.chapa.demo.thrift.auto.Contact entity) throws ThriftException, org.apache.thrift.TException;
+
+    public List<com.chapa.demo.thrift.auto.Contact> getAll() throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void getAll(AsyncMethodCallback resultHandler) throws TException;
+    public void setEntity(com.chapa.demo.thrift.auto.Contact entity, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void getAll(org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -54,19 +70,42 @@ public class EntityService {
       super(iprot, oprot);
     }
 
-    public List<Contact> getAll() throws TException
+    public void setEntity(com.chapa.demo.thrift.auto.Contact entity) throws ThriftException, org.apache.thrift.TException
+    {
+      send_setEntity(entity);
+      recv_setEntity();
+    }
+
+    public void send_setEntity(com.chapa.demo.thrift.auto.Contact entity) throws org.apache.thrift.TException
+    {
+      setEntity_args args = new setEntity_args();
+      args.setEntity(entity);
+      sendBase("setEntity", args);
+    }
+
+    public void recv_setEntity() throws ThriftException, org.apache.thrift.TException
+    {
+      setEntity_result result = new setEntity_result();
+      receiveBase(result, "setEntity");
+      if (result.unavailable != null) {
+        throw result.unavailable;
+      }
+      return;
+    }
+
+    public List<com.chapa.demo.thrift.auto.Contact> getAll() throws org.apache.thrift.TException
     {
       send_getAll();
       return recv_getAll();
     }
 
-    public void send_getAll() throws TException
+    public void send_getAll() throws org.apache.thrift.TException
     {
       getAll_args args = new getAll_args();
       sendBase("getAll", args);
     }
 
-    public List<Contact> recv_getAll() throws TException
+    public List<com.chapa.demo.thrift.auto.Contact> recv_getAll() throws org.apache.thrift.TException
     {
       getAll_result result = new getAll_result();
       receiveBase(result, "getAll");
@@ -94,7 +133,39 @@ public class EntityService {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void getAll(AsyncMethodCallback resultHandler) throws TException {
+    public void setEntity(com.chapa.demo.thrift.auto.Contact entity, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      setEntity_call method_call = new setEntity_call(entity, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class setEntity_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private com.chapa.demo.thrift.auto.Contact entity;
+      public setEntity_call(com.chapa.demo.thrift.auto.Contact entity, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.entity = entity;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("setEntity", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        setEntity_args args = new setEntity_args();
+        args.setEntity(entity);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws ThriftException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_setEntity();
+      }
+    }
+
+    public void getAll(org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       getAll_call method_call = new getAll_call(resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -102,19 +173,19 @@ public class EntityService {
     }
 
     public static class getAll_call extends org.apache.thrift.async.TAsyncMethodCall {
-      public getAll_call(AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws TException {
+      public getAll_call(org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
       }
 
-      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws TException {
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getAll", org.apache.thrift.protocol.TMessageType.CALL, 0));
         getAll_args args = new getAll_args();
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public List<Contact> getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
+      public List<com.chapa.demo.thrift.auto.Contact> getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
@@ -136,8 +207,33 @@ public class EntityService {
     }
 
     private static <I extends Iface> Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> getProcessMap(Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
+      processMap.put("setEntity", new setEntity());
       processMap.put("getAll", new getAll());
       return processMap;
+    }
+
+    public static class setEntity<I extends Iface> extends org.apache.thrift.ProcessFunction<I, setEntity_args> {
+      public setEntity() {
+        super("setEntity");
+      }
+
+      public setEntity_args getEmptyArgsInstance() {
+        return new setEntity_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public setEntity_result getResult(I iface, setEntity_args args) throws org.apache.thrift.TException {
+        setEntity_result result = new setEntity_result();
+        try {
+          iface.setEntity(args.entity);
+        } catch (ThriftException unavailable) {
+          result.unavailable = unavailable;
+        }
+        return result;
+      }
     }
 
     public static class getAll<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getAll_args> {
@@ -153,7 +249,7 @@ public class EntityService {
         return false;
       }
 
-      public getAll_result getResult(I iface, getAll_args args) throws TException {
+      public getAll_result getResult(I iface, getAll_args args) throws org.apache.thrift.TException {
         getAll_result result = new getAll_result();
         result.success = iface.getAll();
         return result;
@@ -173,11 +269,68 @@ public class EntityService {
     }
 
     private static <I extends AsyncIface> Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
+      processMap.put("setEntity", new setEntity());
       processMap.put("getAll", new getAll());
       return processMap;
     }
 
-    public static class getAll<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getAll_args, List<Contact>> {
+    public static class setEntity<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, setEntity_args, Void> {
+      public setEntity() {
+        super("setEntity");
+      }
+
+      public setEntity_args getEmptyArgsInstance() {
+        return new setEntity_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            setEntity_result result = new setEntity_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            setEntity_result result = new setEntity_result();
+            if (e instanceof ThriftException) {
+                        result.unavailable = (ThriftException) e;
+                        result.setUnavailableIsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, setEntity_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.setEntity(args.entity,resultHandler);
+      }
+    }
+
+    public static class getAll<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getAll_args, List<com.chapa.demo.thrift.auto.Contact>> {
       public getAll() {
         super("getAll");
       }
@@ -186,10 +339,10 @@ public class EntityService {
         return new getAll_args();
       }
 
-      public AsyncMethodCallback<List<Contact>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<List<com.chapa.demo.thrift.auto.Contact>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<List<Contact>>() {
-          public void onComplete(List<Contact> o) {
+        return new AsyncMethodCallback<List<com.chapa.demo.thrift.auto.Contact>>() { 
+          public void onComplete(List<com.chapa.demo.thrift.auto.Contact> o) {
             getAll_result result = new getAll_result();
             result.success = o;
             try {
@@ -223,8 +376,723 @@ public class EntityService {
         return false;
       }
 
-      public void start(I iface, getAll_args args, AsyncMethodCallback<List<Contact>> resultHandler) throws TException {
+      public void start(I iface, getAll_args args, org.apache.thrift.async.AsyncMethodCallback<List<com.chapa.demo.thrift.auto.Contact>> resultHandler) throws TException {
         iface.getAll(resultHandler);
+      }
+    }
+
+  }
+
+  public static class setEntity_args implements org.apache.thrift.TBase<setEntity_args, setEntity_args._Fields>, java.io.Serializable, Cloneable, Comparable<setEntity_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("setEntity_args");
+
+    private static final org.apache.thrift.protocol.TField ENTITY_FIELD_DESC = new org.apache.thrift.protocol.TField("entity", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new setEntity_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new setEntity_argsTupleSchemeFactory());
+    }
+
+    public com.chapa.demo.thrift.auto.Contact entity; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      ENTITY((short)1, "entity");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // ENTITY
+            return ENTITY;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.ENTITY, new org.apache.thrift.meta_data.FieldMetaData("entity", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.chapa.demo.thrift.auto.Contact.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(setEntity_args.class, metaDataMap);
+    }
+
+    public setEntity_args() {
+    }
+
+    public setEntity_args(
+      com.chapa.demo.thrift.auto.Contact entity)
+    {
+      this();
+      this.entity = entity;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public setEntity_args(setEntity_args other) {
+      if (other.isSetEntity()) {
+        this.entity = new com.chapa.demo.thrift.auto.Contact(other.entity);
+      }
+    }
+
+    public setEntity_args deepCopy() {
+      return new setEntity_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.entity = null;
+    }
+
+    public com.chapa.demo.thrift.auto.Contact getEntity() {
+      return this.entity;
+    }
+
+    public setEntity_args setEntity(com.chapa.demo.thrift.auto.Contact entity) {
+      this.entity = entity;
+      return this;
+    }
+
+    public void unsetEntity() {
+      this.entity = null;
+    }
+
+    /** Returns true if field entity is set (has been assigned a value) and false otherwise */
+    public boolean isSetEntity() {
+      return this.entity != null;
+    }
+
+    public void setEntityIsSet(boolean value) {
+      if (!value) {
+        this.entity = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case ENTITY:
+        if (value == null) {
+          unsetEntity();
+        } else {
+          setEntity((com.chapa.demo.thrift.auto.Contact)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case ENTITY:
+        return getEntity();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case ENTITY:
+        return isSetEntity();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof setEntity_args)
+        return this.equals((setEntity_args)that);
+      return false;
+    }
+
+    public boolean equals(setEntity_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_entity = true && this.isSetEntity();
+      boolean that_present_entity = true && that.isSetEntity();
+      if (this_present_entity || that_present_entity) {
+        if (!(this_present_entity && that_present_entity))
+          return false;
+        if (!this.entity.equals(that.entity))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(setEntity_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetEntity()).compareTo(other.isSetEntity());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetEntity()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.entity, other.entity);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("setEntity_args(");
+      boolean first = true;
+
+      sb.append("entity:");
+      if (this.entity == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.entity);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (entity != null) {
+        entity.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class setEntity_argsStandardSchemeFactory implements SchemeFactory {
+      public setEntity_argsStandardScheme getScheme() {
+        return new setEntity_argsStandardScheme();
+      }
+    }
+
+    private static class setEntity_argsStandardScheme extends StandardScheme<setEntity_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, setEntity_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // ENTITY
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.entity = new com.chapa.demo.thrift.auto.Contact();
+                struct.entity.read(iprot);
+                struct.setEntityIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, setEntity_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.entity != null) {
+          oprot.writeFieldBegin(ENTITY_FIELD_DESC);
+          struct.entity.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class setEntity_argsTupleSchemeFactory implements SchemeFactory {
+      public setEntity_argsTupleScheme getScheme() {
+        return new setEntity_argsTupleScheme();
+      }
+    }
+
+    private static class setEntity_argsTupleScheme extends TupleScheme<setEntity_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, setEntity_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetEntity()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetEntity()) {
+          struct.entity.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, setEntity_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.entity = new com.chapa.demo.thrift.auto.Contact();
+          struct.entity.read(iprot);
+          struct.setEntityIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class setEntity_result implements org.apache.thrift.TBase<setEntity_result, setEntity_result._Fields>, java.io.Serializable, Cloneable, Comparable<setEntity_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("setEntity_result");
+
+    private static final org.apache.thrift.protocol.TField UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new setEntity_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new setEntity_resultTupleSchemeFactory());
+    }
+
+    public ThriftException unavailable; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      UNAVAILABLE((short)1, "unavailable");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // UNAVAILABLE
+            return UNAVAILABLE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(setEntity_result.class, metaDataMap);
+    }
+
+    public setEntity_result() {
+    }
+
+    public setEntity_result(
+      ThriftException unavailable)
+    {
+      this();
+      this.unavailable = unavailable;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public setEntity_result(setEntity_result other) {
+      if (other.isSetUnavailable()) {
+        this.unavailable = new ThriftException(other.unavailable);
+      }
+    }
+
+    public setEntity_result deepCopy() {
+      return new setEntity_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.unavailable = null;
+    }
+
+    public ThriftException getUnavailable() {
+      return this.unavailable;
+    }
+
+    public setEntity_result setUnavailable(ThriftException unavailable) {
+      this.unavailable = unavailable;
+      return this;
+    }
+
+    public void unsetUnavailable() {
+      this.unavailable = null;
+    }
+
+    /** Returns true if field unavailable is set (has been assigned a value) and false otherwise */
+    public boolean isSetUnavailable() {
+      return this.unavailable != null;
+    }
+
+    public void setUnavailableIsSet(boolean value) {
+      if (!value) {
+        this.unavailable = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case UNAVAILABLE:
+        if (value == null) {
+          unsetUnavailable();
+        } else {
+          setUnavailable((ThriftException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case UNAVAILABLE:
+        return getUnavailable();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case UNAVAILABLE:
+        return isSetUnavailable();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof setEntity_result)
+        return this.equals((setEntity_result)that);
+      return false;
+    }
+
+    public boolean equals(setEntity_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_unavailable = true && this.isSetUnavailable();
+      boolean that_present_unavailable = true && that.isSetUnavailable();
+      if (this_present_unavailable || that_present_unavailable) {
+        if (!(this_present_unavailable && that_present_unavailable))
+          return false;
+        if (!this.unavailable.equals(that.unavailable))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(setEntity_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetUnavailable()).compareTo(other.isSetUnavailable());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUnavailable()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.unavailable, other.unavailable);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("setEntity_result(");
+      boolean first = true;
+
+      sb.append("unavailable:");
+      if (this.unavailable == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.unavailable);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class setEntity_resultStandardSchemeFactory implements SchemeFactory {
+      public setEntity_resultStandardScheme getScheme() {
+        return new setEntity_resultStandardScheme();
+      }
+    }
+
+    private static class setEntity_resultStandardScheme extends StandardScheme<setEntity_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, setEntity_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // UNAVAILABLE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.unavailable = new ThriftException();
+                struct.unavailable.read(iprot);
+                struct.setUnavailableIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, setEntity_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.unavailable != null) {
+          oprot.writeFieldBegin(UNAVAILABLE_FIELD_DESC);
+          struct.unavailable.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class setEntity_resultTupleSchemeFactory implements SchemeFactory {
+      public setEntity_resultTupleScheme getScheme() {
+        return new setEntity_resultTupleScheme();
+      }
+    }
+
+    private static class setEntity_resultTupleScheme extends TupleScheme<setEntity_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, setEntity_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetUnavailable()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetUnavailable()) {
+          struct.unavailable.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, setEntity_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.unavailable = new ThriftException();
+          struct.unavailable.read(iprot);
+          struct.setUnavailableIsSet(true);
+        }
       }
     }
 
@@ -360,9 +1228,7 @@ public class EntityService {
 
     @Override
     public int hashCode() {
-      HashCodeBuilder builder = new HashCodeBuilder();
-
-      return builder.toHashCode();
+      return 0;
     }
 
     @Override
@@ -380,11 +1246,11 @@ public class EntityService {
       return _Fields.findByThriftId(fieldId);
     }
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
       schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
       schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
     }
 
@@ -397,7 +1263,7 @@ public class EntityService {
       return sb.toString();
     }
 
-    public void validate() throws TException {
+    public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
     }
@@ -405,7 +1271,7 @@ public class EntityService {
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
       try {
         write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -413,7 +1279,7 @@ public class EntityService {
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -426,13 +1292,13 @@ public class EntityService {
 
     private static class getAll_argsStandardScheme extends StandardScheme<getAll_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getAll_args struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAll_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
             break;
           }
           switch (schemeField.id) {
@@ -447,7 +1313,7 @@ public class EntityService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getAll_args struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAll_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -466,12 +1332,12 @@ public class EntityService {
     private static class getAll_argsTupleScheme extends TupleScheme<getAll_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getAll_args struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAll_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getAll_args struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAll_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
       }
     }
@@ -489,7 +1355,7 @@ public class EntityService {
       schemes.put(TupleScheme.class, new getAll_resultTupleSchemeFactory());
     }
 
-    public List<Contact> success; // required
+    public List<com.chapa.demo.thrift.auto.Contact> success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -553,9 +1419,9 @@ public class EntityService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT,
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST,
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Contact.class))));
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.chapa.demo.thrift.auto.Contact.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAll_result.class, metaDataMap);
     }
@@ -564,7 +1430,7 @@ public class EntityService {
     }
 
     public getAll_result(
-      List<Contact> success)
+      List<com.chapa.demo.thrift.auto.Contact> success)
     {
       this();
       this.success = success;
@@ -575,9 +1441,9 @@ public class EntityService {
      */
     public getAll_result(getAll_result other) {
       if (other.isSetSuccess()) {
-        List<Contact> __this__success = new ArrayList<Contact>(other.success.size());
-        for (Contact other_element : other.success) {
-          __this__success.add(new Contact(other_element));
+        List<com.chapa.demo.thrift.auto.Contact> __this__success = new ArrayList<com.chapa.demo.thrift.auto.Contact>(other.success.size());
+        for (com.chapa.demo.thrift.auto.Contact other_element : other.success) {
+          __this__success.add(new com.chapa.demo.thrift.auto.Contact(other_element));
         }
         this.success = __this__success;
       }
@@ -596,22 +1462,22 @@ public class EntityService {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<Contact> getSuccessIterator() {
+    public java.util.Iterator<com.chapa.demo.thrift.auto.Contact> getSuccessIterator() {
       return (this.success == null) ? null : this.success.iterator();
     }
 
-    public void addToSuccess(Contact elem) {
+    public void addToSuccess(com.chapa.demo.thrift.auto.Contact elem) {
       if (this.success == null) {
-        this.success = new ArrayList<Contact>();
+        this.success = new ArrayList<com.chapa.demo.thrift.auto.Contact>();
       }
       this.success.add(elem);
     }
 
-    public List<Contact> getSuccess() {
+    public List<com.chapa.demo.thrift.auto.Contact> getSuccess() {
       return this.success;
     }
 
-    public getAll_result setSuccess(List<Contact> success) {
+    public getAll_result setSuccess(List<com.chapa.demo.thrift.auto.Contact> success) {
       this.success = success;
       return this;
     }
@@ -637,7 +1503,7 @@ public class EntityService {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<Contact>)value);
+          setSuccess((List<com.chapa.demo.thrift.auto.Contact>)value);
         }
         break;
 
@@ -693,14 +1559,7 @@ public class EntityService {
 
     @Override
     public int hashCode() {
-      HashCodeBuilder builder = new HashCodeBuilder();
-
-      boolean present_success = true && (isSetSuccess());
-      builder.append(present_success);
-      if (present_success)
-        builder.append(success);
-
-      return builder.toHashCode();
+      return 0;
     }
 
     @Override
@@ -728,11 +1587,11 @@ public class EntityService {
       return _Fields.findByThriftId(fieldId);
     }
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
       schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
       schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
       }
 
@@ -752,7 +1611,7 @@ public class EntityService {
       return sb.toString();
     }
 
-    public void validate() throws TException {
+    public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
     }
@@ -760,7 +1619,7 @@ public class EntityService {
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
       try {
         write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -768,7 +1627,7 @@ public class EntityService {
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -781,32 +1640,32 @@ public class EntityService {
 
     private static class getAll_resultStandardScheme extends StandardScheme<getAll_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getAll_result struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAll_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
             break;
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list18 = iprot.readListBegin();
-                  struct.success = new ArrayList<Contact>(_list18.size);
-                  for (int _i19 = 0; _i19 < _list18.size; ++_i19)
+                  org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
+                  struct.success = new ArrayList<com.chapa.demo.thrift.auto.Contact>(_list0.size);
+                  for (int _i1 = 0; _i1 < _list0.size; ++_i1)
                   {
-                    Contact _elem20;
-                    _elem20 = new Contact();
-                    _elem20.read(iprot);
-                    struct.success.add(_elem20);
+                    com.chapa.demo.thrift.auto.Contact _elem2;
+                    _elem2 = new com.chapa.demo.thrift.auto.Contact();
+                    _elem2.read(iprot);
+                    struct.success.add(_elem2);
                   }
                   iprot.readListEnd();
                 }
                 struct.setSuccessIsSet(true);
-              } else {
+              } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -821,7 +1680,7 @@ public class EntityService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getAll_result struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAll_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -829,9 +1688,9 @@ public class EntityService {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Contact _iter21 : struct.success)
+            for (com.chapa.demo.thrift.auto.Contact _iter3 : struct.success)
             {
-              _iter21.write(oprot);
+              _iter3.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -852,7 +1711,7 @@ public class EntityService {
     private static class getAll_resultTupleScheme extends TupleScheme<getAll_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getAll_result struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAll_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -862,28 +1721,28 @@ public class EntityService {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Contact _iter22 : struct.success)
+            for (com.chapa.demo.thrift.auto.Contact _iter4 : struct.success)
             {
-              _iter22.write(oprot);
+              _iter4.write(oprot);
             }
           }
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getAll_result struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAll_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list23 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Contact>(_list23.size);
-            for (int _i24 = 0; _i24 < _list23.size; ++_i24)
+            org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<com.chapa.demo.thrift.auto.Contact>(_list5.size);
+            for (int _i6 = 0; _i6 < _list5.size; ++_i6)
             {
-              Contact _elem25;
-              _elem25 = new Contact();
-              _elem25.read(iprot);
-              struct.success.add(_elem25);
+              com.chapa.demo.thrift.auto.Contact _elem7;
+              _elem7 = new com.chapa.demo.thrift.auto.Contact();
+              _elem7.read(iprot);
+              struct.success.add(_elem7);
             }
           }
           struct.setSuccessIsSet(true);

@@ -6,22 +6,38 @@
  */
 package com.chapa.demo.thrift.auto;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.thrift.EncodingUtils;
-import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
-import org.apache.thrift.scheme.TupleScheme;
 
-import java.util.*;
+import org.apache.thrift.scheme.TupleScheme;
+import org.apache.thrift.protocol.TTupleProtocol;
+import org.apache.thrift.protocol.TProtocolException;
+import org.apache.thrift.EncodingUtils;
+import org.apache.thrift.TException;
+import org.apache.thrift.async.AsyncMethodCallback;
+import org.apache.thrift.server.AbstractNonblockingServer.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Collections;
+import java.util.BitSet;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.io.Serializable, Cloneable, Comparable<Book> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Book");
 
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.I32, (short)1);
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField DDD_FIELD_DESC = new org.apache.thrift.protocol.TField("ddd", org.apache.thrift.protocol.TType.STRING, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -31,11 +47,13 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
 
   public int id; // required
   public String name; // required
+  public ByteBuffer ddd; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
-    NAME((short)2, "name");
+    NAME((short)2, "name"),
+    DDD((short)3, "ddd");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -54,6 +72,8 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
           return ID;
         case 2: // NAME
           return NAME;
+        case 3: // DDD
+          return DDD;
         default:
           return null;
       }
@@ -103,6 +123,8 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.DDD, new org.apache.thrift.meta_data.FieldMetaData("ddd", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING        , true)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Book.class, metaDataMap);
   }
@@ -112,12 +134,14 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
 
   public Book(
     int id,
-    String name)
+    String name,
+    ByteBuffer ddd)
   {
     this();
     this.id = id;
     setIdIsSet(true);
     this.name = name;
+    this.ddd = ddd;
   }
 
   /**
@@ -128,6 +152,10 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
     this.id = other.id;
     if (other.isSetName()) {
       this.name = other.name;
+    }
+    if (other.isSetDdd()) {
+      this.ddd = org.apache.thrift.TBaseHelper.copyBinary(other.ddd);
+;
     }
   }
 
@@ -140,6 +168,7 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
     setIdIsSet(false);
     this.id = 0;
     this.name = null;
+    this.ddd = null;
   }
 
   public int getId() {
@@ -189,6 +218,40 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
     }
   }
 
+  public byte[] getDdd() {
+    setDdd(org.apache.thrift.TBaseHelper.rightSize(ddd));
+    return ddd == null ? null : ddd.array();
+  }
+
+  public ByteBuffer bufferForDdd() {
+    return ddd;
+  }
+
+  public Book setDdd(byte[] ddd) {
+    setDdd(ddd == null ? (ByteBuffer)null : ByteBuffer.wrap(ddd));
+    return this;
+  }
+
+  public Book setDdd(ByteBuffer ddd) {
+    this.ddd = ddd;
+    return this;
+  }
+
+  public void unsetDdd() {
+    this.ddd = null;
+  }
+
+  /** Returns true if field ddd is set (has been assigned a value) and false otherwise */
+  public boolean isSetDdd() {
+    return this.ddd != null;
+  }
+
+  public void setDddIsSet(boolean value) {
+    if (!value) {
+      this.ddd = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case ID:
@@ -207,6 +270,14 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       }
       break;
 
+    case DDD:
+      if (value == null) {
+        unsetDdd();
+      } else {
+        setDdd((ByteBuffer)value);
+      }
+      break;
+
     }
   }
 
@@ -217,6 +288,9 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
 
     case NAME:
       return getName();
+
+    case DDD:
+      return getDdd();
 
     }
     throw new IllegalStateException();
@@ -233,6 +307,8 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       return isSetId();
     case NAME:
       return isSetName();
+    case DDD:
+      return isSetDdd();
     }
     throw new IllegalStateException();
   }
@@ -268,24 +344,21 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
         return false;
     }
 
+    boolean this_present_ddd = true && this.isSetDdd();
+    boolean that_present_ddd = true && that.isSetDdd();
+    if (this_present_ddd || that_present_ddd) {
+      if (!(this_present_ddd && that_present_ddd))
+        return false;
+      if (!this.ddd.equals(that.ddd))
+        return false;
+    }
+
     return true;
   }
 
   @Override
   public int hashCode() {
-    HashCodeBuilder builder = new HashCodeBuilder();
-
-    boolean present_id = true;
-    builder.append(present_id);
-    if (present_id)
-      builder.append(id);
-
-    boolean present_name = true && (isSetName());
-    builder.append(present_name);
-    if (present_name)
-      builder.append(name);
-
-    return builder.toHashCode();
+    return 0;
   }
 
   @Override
@@ -316,6 +389,16 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetDdd()).compareTo(other.isSetDdd());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetDdd()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ddd, other.ddd);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -323,11 +406,11 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
     return _Fields.findByThriftId(fieldId);
   }
 
-  public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+  public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
     schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
   }
 
-  public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+  public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
   }
 
@@ -347,11 +430,19 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       sb.append(this.name);
     }
     first = false;
+    if (!first) sb.append(", ");
+    sb.append("ddd:");
+    if (this.ddd == null) {
+      sb.append("null");
+    } else {
+      org.apache.thrift.TBaseHelper.toString(this.ddd, sb);
+    }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
 
-  public void validate() throws TException {
+  public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // check for sub-struct validity
   }
@@ -359,7 +450,7 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
   private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
     try {
       write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-    } catch (TException te) {
+    } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
     }
   }
@@ -369,7 +460,7 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
       __isset_bitfield = 0;
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-    } catch (TException te) {
+    } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
     }
   }
@@ -382,13 +473,13 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
 
   private static class BookStandardScheme extends StandardScheme<Book> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Book struct) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, Book struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
       {
         schemeField = iprot.readFieldBegin();
-        if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+        if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
           break;
         }
         switch (schemeField.id) {
@@ -396,7 +487,7 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.id = iprot.readI32();
               struct.setIdIsSet(true);
-            } else {
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -404,7 +495,15 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.name = iprot.readString();
               struct.setNameIsSet(true);
-            } else {
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 3: // DDD
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.ddd = iprot.readBinary();
+              struct.setDddIsSet(true);
+            } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
@@ -419,7 +518,7 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Book struct) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, Book struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -429,6 +528,11 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       if (struct.name != null) {
         oprot.writeFieldBegin(NAME_FIELD_DESC);
         oprot.writeString(struct.name);
+        oprot.writeFieldEnd();
+      }
+      if (struct.ddd != null) {
+        oprot.writeFieldBegin(DDD_FIELD_DESC);
+        oprot.writeBinary(struct.ddd);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -446,7 +550,7 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
   private static class BookTupleScheme extends TupleScheme<Book> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Book struct) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, Book struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetId()) {
@@ -455,19 +559,25 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       if (struct.isSetName()) {
         optionals.set(1);
       }
-      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetDdd()) {
+        optionals.set(2);
+      }
+      oprot.writeBitSet(optionals, 3);
       if (struct.isSetId()) {
         oprot.writeI32(struct.id);
       }
       if (struct.isSetName()) {
         oprot.writeString(struct.name);
       }
+      if (struct.isSetDdd()) {
+        oprot.writeBinary(struct.ddd);
+      }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Book struct) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, Book struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(2);
+      BitSet incoming = iprot.readBitSet(3);
       if (incoming.get(0)) {
         struct.id = iprot.readI32();
         struct.setIdIsSet(true);
@@ -475,6 +585,10 @@ public class Book implements org.apache.thrift.TBase<Book, Book._Fields>, java.i
       if (incoming.get(1)) {
         struct.name = iprot.readString();
         struct.setNameIsSet(true);
+      }
+      if (incoming.get(2)) {
+        struct.ddd = iprot.readBinary();
+        struct.setDddIsSet(true);
       }
     }
   }

@@ -6,31 +6,43 @@
  */
 package com.chapa.demo.thrift.auto;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.thrift.TException;
-import org.apache.thrift.async.AsyncMethodCallback;
-import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
+
 import org.apache.thrift.scheme.TupleScheme;
-import org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer;
+import org.apache.thrift.protocol.TTupleProtocol;
+import org.apache.thrift.protocol.TProtocolException;
+import org.apache.thrift.EncodingUtils;
+import org.apache.thrift.TException;
+import org.apache.thrift.async.AsyncMethodCallback;
+import org.apache.thrift.server.AbstractNonblockingServer.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Collections;
+import java.util.BitSet;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 public class HelloWorldService {
 
   public interface Iface {
 
-    public String sayHello(String username) throws TException;
+    public String sayHello(String username) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void sayHello(String username, AsyncMethodCallback resultHandler) throws TException;
+    public void sayHello(String username, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -54,20 +66,20 @@ public class HelloWorldService {
       super(iprot, oprot);
     }
 
-    public String sayHello(String username) throws TException
+    public String sayHello(String username) throws org.apache.thrift.TException
     {
       send_sayHello(username);
       return recv_sayHello();
     }
 
-    public void send_sayHello(String username) throws TException
+    public void send_sayHello(String username) throws org.apache.thrift.TException
     {
       sayHello_args args = new sayHello_args();
       args.setUsername(username);
       sendBase("sayHello", args);
     }
 
-    public String recv_sayHello() throws TException
+    public String recv_sayHello() throws org.apache.thrift.TException
     {
       sayHello_result result = new sayHello_result();
       receiveBase(result, "sayHello");
@@ -95,7 +107,7 @@ public class HelloWorldService {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void sayHello(String username, AsyncMethodCallback resultHandler) throws TException {
+    public void sayHello(String username, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       sayHello_call method_call = new sayHello_call(username, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -104,12 +116,12 @@ public class HelloWorldService {
 
     public static class sayHello_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String username;
-      public sayHello_call(String username, AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws TException {
+      public sayHello_call(String username, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.username = username;
       }
 
-      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws TException {
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("sayHello", org.apache.thrift.protocol.TMessageType.CALL, 0));
         sayHello_args args = new sayHello_args();
         args.setUsername(username);
@@ -117,8 +129,8 @@ public class HelloWorldService {
         prot.writeMessageEnd();
       }
 
-      public String getResult() throws TException {
-        if (getState() != State.RESPONSE_READ) {
+      public String getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
@@ -157,7 +169,7 @@ public class HelloWorldService {
         return false;
       }
 
-      public sayHello_result getResult(I iface, sayHello_args args) throws TException {
+      public sayHello_result getResult(I iface, sayHello_args args) throws org.apache.thrift.TException {
         sayHello_result result = new sayHello_result();
         result.success = iface.sayHello(args.username);
         return result;
@@ -192,7 +204,7 @@ public class HelloWorldService {
 
       public AsyncMethodCallback<String> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<String>() {
+        return new AsyncMethodCallback<String>() { 
           public void onComplete(String o) {
             sayHello_result result = new sayHello_result();
             result.success = o;
@@ -227,7 +239,7 @@ public class HelloWorldService {
         return false;
       }
 
-      public void start(I iface, sayHello_args args, AsyncMethodCallback<String> resultHandler) throws TException {
+      public void start(I iface, sayHello_args args, org.apache.thrift.async.AsyncMethodCallback<String> resultHandler) throws TException {
         iface.sayHello(args.username,resultHandler);
       }
     }
@@ -309,7 +321,7 @@ public class HelloWorldService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.USERNAME, new org.apache.thrift.meta_data.FieldMetaData("username", org.apache.thrift.TFieldRequirementType.DEFAULT,
+      tmpMap.put(_Fields.USERNAME, new org.apache.thrift.meta_data.FieldMetaData("username", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sayHello_args.class, metaDataMap);
@@ -429,14 +441,7 @@ public class HelloWorldService {
 
     @Override
     public int hashCode() {
-      HashCodeBuilder builder = new HashCodeBuilder();
-
-      boolean present_username = true && (isSetUsername());
-      builder.append(present_username);
-      if (present_username)
-        builder.append(username);
-
-      return builder.toHashCode();
+      return 0;
     }
 
     @Override
@@ -464,11 +469,11 @@ public class HelloWorldService {
       return _Fields.findByThriftId(fieldId);
     }
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
       schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
       schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
     }
 
@@ -488,7 +493,7 @@ public class HelloWorldService {
       return sb.toString();
     }
 
-    public void validate() throws TException {
+    public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
     }
@@ -496,7 +501,7 @@ public class HelloWorldService {
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
       try {
         write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -504,7 +509,7 @@ public class HelloWorldService {
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -517,13 +522,13 @@ public class HelloWorldService {
 
     private static class sayHello_argsStandardScheme extends StandardScheme<sayHello_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, sayHello_args struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, sayHello_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
             break;
           }
           switch (schemeField.id) {
@@ -531,7 +536,7 @@ public class HelloWorldService {
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
                 struct.username = iprot.readString();
                 struct.setUsernameIsSet(true);
-              } else {
+              } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -546,7 +551,7 @@ public class HelloWorldService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, sayHello_args struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, sayHello_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -570,7 +575,7 @@ public class HelloWorldService {
     private static class sayHello_argsTupleScheme extends TupleScheme<sayHello_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, sayHello_args struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, sayHello_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetUsername()) {
@@ -583,7 +588,7 @@ public class HelloWorldService {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, sayHello_args struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, sayHello_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
@@ -670,7 +675,7 @@ public class HelloWorldService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT,
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sayHello_result.class, metaDataMap);
@@ -790,14 +795,7 @@ public class HelloWorldService {
 
     @Override
     public int hashCode() {
-      HashCodeBuilder builder = new HashCodeBuilder();
-
-      boolean present_success = true && (isSetSuccess());
-      builder.append(present_success);
-      if (present_success)
-        builder.append(success);
-
-      return builder.toHashCode();
+      return 0;
     }
 
     @Override
@@ -825,11 +823,11 @@ public class HelloWorldService {
       return _Fields.findByThriftId(fieldId);
     }
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
       schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
       schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
       }
 
@@ -849,7 +847,7 @@ public class HelloWorldService {
       return sb.toString();
     }
 
-    public void validate() throws TException {
+    public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
     }
@@ -857,7 +855,7 @@ public class HelloWorldService {
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
       try {
         write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -865,7 +863,7 @@ public class HelloWorldService {
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (TException te) {
+      } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
       }
     }
@@ -878,13 +876,13 @@ public class HelloWorldService {
 
     private static class sayHello_resultStandardScheme extends StandardScheme<sayHello_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, sayHello_result struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, sayHello_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
             break;
           }
           switch (schemeField.id) {
@@ -892,7 +890,7 @@ public class HelloWorldService {
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
                 struct.success = iprot.readString();
                 struct.setSuccessIsSet(true);
-              } else {
+              } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -907,7 +905,7 @@ public class HelloWorldService {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, sayHello_result struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, sayHello_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -931,7 +929,7 @@ public class HelloWorldService {
     private static class sayHello_resultTupleScheme extends TupleScheme<sayHello_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, sayHello_result struct) throws TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, sayHello_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -944,7 +942,7 @@ public class HelloWorldService {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, sayHello_result struct) throws TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, sayHello_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {

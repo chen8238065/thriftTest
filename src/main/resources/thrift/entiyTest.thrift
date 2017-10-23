@@ -1,22 +1,12 @@
+include "./entity.thrift"
+
 namespace java com.chapa.demo.thrift.auto
 
-
-struct Book{
-	1:i32 id
-	2:string name
+exception ThriftException {
+   1: i32 errorCode,
+   2: string message
 }
-
-struct Contact{
-	1:i32 id
-	2:string name
-	3:i64 birthday
-	4:string phoneNo
-	5:string ipAddress
-	6:map<string,string> props
-	7:double salary
-	8:set<Book> books
-}
-
 service  EntityService {
-  list<Contact> getAll();
-}
+  void setEntity(1:entity.Contact entity) throws (1:ThriftException unavailable);
+  list<entity.Contact> getAll();
+ }
