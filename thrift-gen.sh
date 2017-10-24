@@ -23,6 +23,6 @@ mecho "Begin Gen!"
 
 find ./src/main/resources -name "*.thrift"|while read line;do
 	mecho "Gen $line"
-	thrift  --gen java -out src/main/java $line
+	thrift -r --gen java -out src/main/java -I src/main/resources/thrift $line
 done
 mecho "SUCCESS!"

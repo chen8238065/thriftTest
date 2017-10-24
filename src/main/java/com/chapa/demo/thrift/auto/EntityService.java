@@ -34,6 +34,9 @@ import org.slf4j.LoggerFactory;
 
 public class EntityService {
 
+  /**
+   * ddddd
+   */
   public interface Iface {
 
     public void setEntity(com.chapa.demo.thrift.auto.Contact entity) throws ThriftException, org.apache.thrift.TException;
