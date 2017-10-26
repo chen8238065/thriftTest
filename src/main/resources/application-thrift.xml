@@ -4,82 +4,82 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
-    <context:property-placeholder location="classpath:thrift.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:templates.thrift.properties" ignore-unresolvable="true"/>
 
     <!-- ProtocolFactory -->
-    <bean name="binaryProtocolFactory" class="com.chapa.demo.thrift.server.common.TProtocolFactoryFactory">
+    <bean name="binaryProtocolFactory" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactoryFactory">
         <property name="protocolType" value="TBinaryProtocol"/>
     </bean>
-    <bean name="compactProtocolFactory" class="com.chapa.demo.thrift.server.common.TProtocolFactoryFactory">
+    <bean name="compactProtocolFactory" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactoryFactory">
         <property name="protocolType" value="TBinaryProtocol"/>
     </bean>
-    <bean name="JSONProtocolFactory" class="com.chapa.demo.thrift.server.common.TProtocolFactoryFactory">
+    <bean name="JSONProtocolFactory" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactoryFactory">
         <property name="protocolType" value="TJSONProtocol"/>
     </bean>
-    <bean name="simpleJSONProtocolFactory" class="com.chapa.demo.thrift.server.common.TProtocolFactoryFactory">
+    <bean name="simpleJSONProtocolFactory" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactoryFactory">
         <property name="protocolType" value="TSimpleJSONProtocol"/>
     </bean>
 
     <!-- Protocol -->
-    <bean name="binaryProtocol$THttpClient" class="com.chapa.demo.thrift.server.common.TProtocolFactory">
+    <bean name="binaryProtocol$THttpClient" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactory">
         <property name="protocolType" value="TBinaryProtocol"/>
         <property name="transport" ref="THttpClient"/>
     </bean>
-    <bean name="binaryProtocol$TSocket" class="com.chapa.demo.thrift.server.common.TProtocolFactory">
+    <bean name="binaryProtocol$TSocket" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactory">
         <property name="protocolType" value="TBinaryProtocol"/>
         <property name="transport" ref="TSocket"/>
     </bean>
 
 
-    <bean name="compactProtocol" class="com.chapa.demo.thrift.server.common.TProtocolFactory">
+    <bean name="compactProtocol" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactory">
         <property name="protocolType" value="TBinaryProtocol"/>
     </bean>
-    <bean name="JSONProtocol" class="com.chapa.demo.thrift.server.common.TProtocolFactory">
+    <bean name="JSONProtocol" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactory">
         <property name="protocolType" value="TJSONProtocol"/>
     </bean>
-    <bean name="simpleJSONProtocol" class="com.chapa.demo.thrift.server.common.TProtocolFactory">
+    <bean name="simpleJSONProtocol" class="com.chapa.demo.templates.thrift.server.common.TProtocolFactory">
         <property name="protocolType" value="TSimpleJSONProtocol"/>
     </bean>
 
     <!-- TTransportFactory -->
-    <bean name="framedTransportFactory" class="org.apache.thrift.transport.TFramedTransport.Factory"/>
-    <bean name="nonblockingSocketFactory" class="org.apache.thrift.transport.TFramedTransport.Factory"/>
-    <bean name="fastFramedTransportFactory" class="org.apache.thrift.transport.TFastFramedTransport.Factory"/>
+    <bean name="framedTransportFactory" class="org.apache.templates.thrift.transport.TFramedTransport.Factory"/>
+    <bean name="nonblockingSocketFactory" class="org.apache.templates.thrift.transport.TFramedTransport.Factory"/>
+    <bean name="fastFramedTransportFactory" class="org.apache.templates.thrift.transport.TFastFramedTransport.Factory"/>
 
 
     <!-- TServerTransport -->
-    <bean name="TServerSocket" class="org.apache.thrift.transport.TServerSocket" lazy-init="true">
+    <bean name="TServerSocket" class="org.apache.templates.thrift.transport.TServerSocket" lazy-init="true">
         <constructor-arg type="int" value="${SERVER_PORT}"/>
     </bean>
-    <bean name="TNonblockingServerSocket" class="org.apache.thrift.transport.TNonblockingServerSocket" lazy-init="true">
+    <bean name="TNonblockingServerSocket" class="org.apache.templates.thrift.transport.TNonblockingServerSocket" lazy-init="true">
         <constructor-arg type="int" value="${SERVER_PORT}"/>
     </bean>
 
 
     <!-- TTransport -->
-    <bean name="TSocket" class="org.apache.thrift.transport.TSocket">
+    <bean name="TSocket" class="org.apache.templates.thrift.transport.TSocket">
         <constructor-arg index="0" value="${SERVER_IP}"/>
         <constructor-arg index="1" value="${SERVER_PORT}"/>
         <constructor-arg index="2" value="${TIMEOUT}"/>
     </bean>
-    <bean name="TNonblockingSocket" class="org.apache.thrift.transport.TNonblockingSocket">
+    <bean name="TNonblockingSocket" class="org.apache.templates.thrift.transport.TNonblockingSocket">
         <constructor-arg index="0" value="${SERVER_IP}"/>
         <constructor-arg index="1" value="${SERVER_PORT}"/>
         <constructor-arg index="2" value="${TIMEOUT}"/>
     </bean>
-    <bean name="THttpClient" class="org.apache.thrift.transport.THttpClient">
+    <bean name="THttpClient" class="org.apache.templates.thrift.transport.THttpClient">
         <constructor-arg index="0" value="${SERVER_URL}"/>
     </bean>
 
     <!-- Client -->
-    <bean name="helloClientDemo" class="com.chapa.demo.thrift.client.HelloClientDemo">
+    <bean name="helloClientDemo" class="com.chapa.demo.templates.thrift.client.HelloClientDemo">
         <property name="transport" ref="TSocket"/>
         <property name="tProtocol" ref="binaryProtocol$TSocket"/>
     </bean>
 
 
     <!-- TServerFactory -->
-    <bean name="simpleServer" class="com.chapa.demo.thrift.server.common.TServerFactory" lazy-init="true">
+    <bean name="simpleServer" class="com.chapa.demo.templates.thrift.server.common.TServerFactory" lazy-init="true">
         <property name="serverType" value="TSimpleServer"/>
         <property name="protocolFactory" ref="binaryProtocolFactory"/>
         <property name="transportFactory" ref="nonblockingSocketFactory"/>
@@ -88,7 +88,7 @@
 
 
     <!-- Server -->
-    <bean name="helloServerDemo" class="com.chapa.demo.thrift.server.HelloServerDemo" lazy-init="true">
+    <bean name="helloServerDemo" class="com.chapa.demo.templates.thrift.server.HelloServerDemo" lazy-init="true">
         <property name="server" ref="simpleServer"/>
     </bean>
 

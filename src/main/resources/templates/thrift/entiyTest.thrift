@@ -1,6 +1,6 @@
-include "./entity.thrift"
+include "./entity.templates.thrift"
 
-namespace java com.chapa.demo.thrift.auto
+namespace java com.chapa.demo.templates.thrift.auto
 
 enum TestEnum {  
 	A = 1  

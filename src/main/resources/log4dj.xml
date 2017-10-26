@@ -17,7 +17,7 @@
 	</appender>
 
 	<appender name="activexAppender" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="d:/log/thrift-demo.log" />
+		<param name="File" value="d:/log/templates.thrift-demo.log" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"

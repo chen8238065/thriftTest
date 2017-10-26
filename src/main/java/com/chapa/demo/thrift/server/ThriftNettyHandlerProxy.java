@@ -76,7 +76,7 @@ public class ThriftNettyHandlerProxy extends ChannelInboundHandlerAdapter {
 
             processor.process(inProtocol, outProtocol);
             response= new DefaultFullHttpResponse(HTTP_1_1, OK,out.buffer());
-            response.headers().set(HttpHeaders.Names.CONTENT_TYPE, "application/x-thrift");
+            response.headers().set(HttpHeaders.Names.CONTENT_TYPE, "application/x-templates.thrift");
         } catch (TException te) {
         }
         return response;

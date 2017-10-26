@@ -1,4 +1,4 @@
-namespace java com.chapa.demo.thrift.auto
+namespace java com.chapa.demo.templates.thrift.auto
 
 struct TypeTest{
 	1:required i32 id
